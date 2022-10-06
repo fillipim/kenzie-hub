@@ -8,7 +8,7 @@ export const Loading = styled.div`
     animation: is-rotate 1s infinite ease-in-out;
     border-radius: 50%;
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
 
     @keyframes is-rotate {

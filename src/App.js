@@ -12,6 +12,7 @@ function App() {
       hideProgressBar={false} 
       pauseOnHover={true}
       theme="dark"
+      
       />
       <GlobalStyles/>
       <MainRoutes/>
