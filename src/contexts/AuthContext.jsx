@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -29,6 +29,7 @@ const UserProvider = ({ children }) => {
   const submitRegister = async (body) => {
     try {
       const { data } = await api("/users", body);
+      toast.success("Cadastro concluído faça login para continuar!")
       navigate("/singIn");
       setIsload(false);
     } catch (error) {
@@ -38,17 +39,17 @@ const UserProvider = ({ children }) => {
 
   const submitLogin = async (body) => {
     setIsload(true);
-
     try {
       const { data } = await api.post("/sessions", body);
-      setUser(data);
       toast.success("Login concluìdo!");
+      setUser(data);
       localStorage.setItem("@kenzie-hub: token", data.token);
       api.defaults.headers.athorization = `Bearer ${data.token}`;
       navigate("/dashboard");
       setIsload(false);
     } catch (error) {
       console.log(error);
+      toast.error("Email ou senha inválidos!")
       setIsload(false);
     }
   };

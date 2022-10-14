@@ -11,26 +11,30 @@ const TechProvider = ({ children }) => {
   const [selectedTech, setSelectedTech] = useState({});
 
   const addTech = async (data) => {
-    setIsload(true)
+      setIsload(true);
     try {
       await api.post("users/techs", data);
       toast.success("Tech adicionada!");
       searchUser();
       setShowModal(null);
+      setIsload(false);
     } catch (error) {
       console.error(error);
+      setIsload(false)
     }
   };
 
   const editTech = async (data, id) => {
-    setIsload(true)
+      setIsload(true);
     try {
-      await api.put(`/users/techs/${id}`, data)
-      toast.success("Tech atualizada!")
-      searchUser()
-      setShowModal()
+      await api.put(`/users/techs/${id}`, data);
+      toast.success("Tech atualizada!");
+      searchUser();
+      setShowModal(null);
+      setIsload(false);
     } catch (error) {
-        console.log(error);
+      console.log(error);
+      setIsload(false)
     }
   };
 
@@ -42,7 +46,7 @@ const TechProvider = ({ children }) => {
         addTech,
         setSelectedTech,
         selectedTech,
-        editTech
+        editTech,
       }}
     >
       {children}

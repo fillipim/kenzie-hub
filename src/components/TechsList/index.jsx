@@ -7,8 +7,6 @@ import * as S from "./techList.style"
 const TechsList = () => {
   const { user:{techs} } = useContext(UserContext);
 
-  console.log(techs);
-
   return (
     <S.TechList>
       { techs && techs.map(({ title, status, id }) => (

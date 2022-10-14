@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { StyledTitle } from "../../styles/typography";
 import { ButtonStyle } from "../Button/button.style";
 
 const ModalContainer = styled.div`

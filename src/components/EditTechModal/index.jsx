@@ -3,13 +3,16 @@ import { UserTechsContext } from "../../contexts/UserTechsContext";
 import { useForm } from "react-hook-form";
 import api from "../../services/api";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { UserContext } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import { edittechSchema } from "../../validations/tech";
+
 import Input from "../Input/input.style";
 import Select from "../Select/select.style";
 import { ErrorMessage } from "../ErrorMessage/errorMessage.style";
 import * as S from "./editTech.style";
 import { StyledTitle } from "../../styles/typography";
-import { UserContext } from "../../contexts/AuthContext";
-import { toast } from "react-toastify";
 
 const EditTechModal = () => {
   const { showModal, setShowModal, editTech, selectedTech } =
@@ -19,7 +22,9 @@ const EditTechModal = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(edittechSchema)
+  });
 
   const handleEditTech = (data) => {
     editTech(data, selectedTech.id);
@@ -37,6 +42,8 @@ const EditTechModal = () => {
       console.log(error);
     }
   };
+
+  console.log(errors);
 
   return (
     showModal === "editTech" && (
