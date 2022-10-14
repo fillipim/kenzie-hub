@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useNavigate } from "react-router-dom";
-import * as yup from "yup";
+import { UserContext } from "../../contexts/AuthContext";
 
+import Loading from "../Loading";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import Logo from "../../assets/img/Logo.svg";
 
-import { post } from "../../services/api/request";
-import { toast } from "react-toastify";
+import { singInSchema } from "../../validations/singIn";
 
-import Input from "../Input/style";
-import * as S from "./style";
-import Button from "../Button/style";
+import Input from "../Input/input.style";
+import * as S from "./singIn.style";
+import { ButtonStyle } from "../Button/button.style";
 import { StyledTitle } from "../../styles/typography";
-import { Loading } from "../Loading";
+import { ErrorMessage } from "../ErrorMessage/errorMessage.style";
 
 const SingIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoad, setIsload] = useState(true);
-  const navigate = useNavigate();
+
+  const { setIsload, isLoad, submitLogin } = useContext(UserContext);
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
@@ -31,10 +30,6 @@ const SingIn = () => {
     setIsload(false);
   }, []);
 
-  const singInSchema = yup.object().shape({
-    email: yup.string().required("Campo obrigatório!").email("Email invalido"),
-    password: yup.string().required("Campo obrigatório!"),
-  });
   const {
     register,
     handleSubmit,
@@ -43,27 +38,12 @@ const SingIn = () => {
     resolver: yupResolver(singInSchema),
   });
 
-  const onSubmit = async (body) => {
-    setIsload(true);
-    const { data } = await post(body, "/sessions");
-    if (data.message) {
-      setIsload(false)
-      toast.error("Email ou senha inválidos!");
-    } else {
-      toast.success("Login concluido");
-      localStorage.setItem("userToken:", data.token);
-      localStorage.setItem("userID:", data.user.id);
-      navigate(`/dashboard/${data.user.id}`);
-      setIsload(false);
-    }
-  };
-
   return (
     <>
       {isLoad ? (
         <Loading />
       ) : (
-        <S.SingInForm onSubmit={handleSubmit(onSubmit)}>
+        <S.SingInForm onSubmit={handleSubmit(submitLogin)}>
           <img src={Logo} alt="" />
           <StyledTitle tag="h3" titleType="title3">
             Login
@@ -75,33 +55,35 @@ const SingIn = () => {
               placeholder="Digite aqui seu email"
               {...register("email")}
             />
-            <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+            <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
               {errors.email?.message}
-            </StyledTitle>
+            </ErrorMessage>
           </label>
           <label>
             Senha:
             <div>
               <Input
                 type={showPassword ? "text" : "password"}
-                placeholder="Digite aqui seu nome"
+                placeholder="Digite aqui sua senha"
                 {...register("password")}
               />
-              <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+              <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
                 {errors.password?.message}
-              </StyledTitle>
+              </ErrorMessage>
               <button onClick={(e) => togglePasswordVisibility(e)}>
                 {showPassword ? <FaEyeSlash /> : <IoEyeSharp />}
               </button>
             </div>
           </label>
-          <Button butttonType="primary">Entrar</Button>
+          <ButtonStyle tag="button" buttonType="primary">
+            Entrar
+          </ButtonStyle>
           <StyledTitle tag="span" titleType="headlineBold" color="#868E96">
             Ainda não possui uma conta?
           </StyledTitle>
-          <Link to="singUp">
-            <Button butttonType="default">Cadastre-se</Button>
-          </Link>
+          <ButtonStyle buttonType="default" tag="a" to="singUp">
+            Cadastre-se
+          </ButtonStyle>
         </S.SingInForm>
       )}
     </>

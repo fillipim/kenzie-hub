@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserTechsContext } from "../../contexts/UserTechsContext";
+import { UserContext } from "../../contexts/AuthContext";
+
 import Logo from "../../assets/img/Logo.svg";
-import Button from "../../components/Button/style";
-import { get } from "../../services/api/request";
+import AddTechModal from "../../components/AddTechModal";
+import EditTechModal from "../../components/EditTechModal";
+import TechsList from "../../components/TechsList";
+
+import { ButtonStyle } from "../../components/Button/button.style";
 import { StyledTitle } from "../../styles/typography";
-import * as S from "./style";
+import * as S from "./dashboard.style";
+import Loading from "../../components/Loading";
 
 const Dashboard = () => {
-  const { id } = useParams();
-  const [userInfo, setUserInfo] = useState({});
+  const { setShowModal } = useContext(UserTechsContext);
+  const { isLoad } = useContext(UserContext);
   const navigate = useNavigate();
-  const token = localStorage.getItem("userToken");
-
-  const seachUser = async () => {
-    const { course_module, name } = await get(id, "users");
-    setUserInfo({ name: name, module: course_module });
-  };
-
-  useEffect(() => {
-    
-    seachUser();
-  }, []);
+  const {
+    user: { name, course_module },
+  } = useContext(UserContext);
 
   const logout = () => {
     localStorage.clear();
@@ -29,28 +28,32 @@ const Dashboard = () => {
 
   return (
     <S.Dashboard>
-      <header>
+      { isLoad && <Loading/>}
+      <S.Header>
         <img src={Logo} alt="" />
-        <Button butttonType="medium" onClick={logout}>
+        <ButtonStyle tag="button" buttonType="medium" onClick={logout}>
           Sair
-        </Button>
-      </header>
-      <div>
+        </ButtonStyle>
+      </S.Header>
+      <S.ProfileInfo>
         <StyledTitle tag="h3" titleType="title1" color="#fff">
-          Olá: {userInfo.name}
+          Olá: {name}
         </StyledTitle>
         <StyledTitle tag="span" titleType="headline" color="#868E96">
-          {userInfo.module}
+          {course_module}
         </StyledTitle>
-      </div>
-      <div>
-        <StyledTitle tag="h2" titleType="title1" color="#fff">
-          Que pena! Estamos em desenvolvimento :(
+      </S.ProfileInfo>
+      <S.TechsHeader>
+        <StyledTitle tag="h3" titleType="title2" color="white">
+          Tecnologias
         </StyledTitle>
-        <StyledTitle tag="span" titleType="headline" color="#fff">
-          Nossa aplicação está em desenvolvimento, em breve teremos novidades
-        </StyledTitle>
-      </div>
+        <button onClick={() => setShowModal("addTech")}>+</button>
+      </S.TechsHeader>
+      <S.UserTechs>
+        <TechsList />
+      </S.UserTechs>
+      <AddTechModal />
+      <EditTechModal />
     </S.Dashboard>
   );
 };

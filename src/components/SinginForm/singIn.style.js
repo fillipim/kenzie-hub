@@ -1,34 +1,29 @@
 import styled from "styled-components";
 
-export const SingUpForm = styled.form`
+export const SingInForm = styled.form`
     width: 295px;
     background-color: var(--grey-3);
     padding: 19px 17px ;
     color: #fff;
     position: relative;
+    border-radius: 8px;
     img{
         width: 101px;
         position: absolute;
-        left: 0;
-        top: -5%;
+        left: 33%;
+        top: -7%;
     }
     h3{
         text-align: center;
         padding: 2rem;
-        line-height: 28px;
     }
     label{
         font-size: 10px;
     }
-    a{
-        position: absolute;
-        right: 0;
-        top: -8%;
-    }
-     button{
+     button, a{
         margin: 1rem 0;
     }
-    input, select{
+    input{
         margin-top: 1rem;
         margin-bottom: .4rem;
     }
@@ -45,21 +40,19 @@ export const SingUpForm = styled.form`
         color: #868E96;
     }
     span:nth-child(1){
-        display: block;
-
-    }
-    span:nth-child(n + 2){
-        text-align: start;
+        text-align: center;
         display: block;
         cursor: pointer;
-        min-height: 14px;
+        height: 14px;
         transition: all .3s;
     }
 
     @media (min-width: 780px) {
         width: 370px;
+
         img{
             width: 143px;
         }
     }
-    `
+
+`

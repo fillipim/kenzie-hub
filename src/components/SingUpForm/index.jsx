@@ -1,47 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { UserContext } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useNavigate } from "react-router-dom";
-import * as yup from "yup";
 
-import { post } from "../../services/api/request";
-import { toast } from "react-toastify";
+import { singUpschema } from "../../validations/singUp";
 
-import Button from "../Button/style";
-import Input from "../Input/style";
+import Input from "../Input/input.style";
 import { StyledTitle } from "../../styles/typography";
 import Logo from "../../assets/img/Logo.svg";
-import * as S from "./style";
-import Select from "../Select/style";
+import * as S from "./singUp.style";
+import Select from "../Select/select.style";
+import { ButtonStyle } from "../Button/button.style";
+import { ErrorMessage } from "../ErrorMessage/errorMessage.style";
 
 const SingUp = () => {
-  const navigate = useNavigate();
-
-  const singUpschema = yup.object().shape({
-    name: yup.string().required("Nome obrigatório"),
-    email: yup.string().required("Email obrigatório").email(),
-    password: yup
-      .string()
-      .required(
-        "Senha com no mínimo 8 caracteres. Necessário ter letras, números e ao menos um símbolo!"
-      )
-      .matches(/(\d{0,8})/, "Deve conter no mínimo 8 caracteres!")
-      .matches(/(?=.*\d)/, "Deve conter um número!")
-      .matches(
-        /(?=.*[$*&@#])/,
-        "Deve conter ao menos um caractere especial! Ex: $*&@#"
-      ),
-    confirmPassword: yup
-      .string()
-      .required("Comfirme a senha")
-      .oneOf([yup.ref("password")], "As Senhas não coincidem"),
-    bio: yup
-      .string()
-      .required("Bio obrigatória")
-      .max(30, "Máximo 30 caracteres"),
-    contact: yup.string().required("Contato Obrigatório"),
-    course_module: yup.string().required("Módulo Obrigatório1"),
-  });
+  const { submitRegister } = useContext(UserContext);
 
   const {
     register,
@@ -51,23 +25,14 @@ const SingUp = () => {
     resolver: yupResolver(singUpschema),
   });
 
-  const onSubmit = async (body) => {
-    const data = await post(body, "/users");
-
-    if (data.status === "error") {
-      toast.error("Esse email ja esta sendo usado!");
-    } else {
-      toast.success("cadastro concluido faça login!");
-      navigate("/");
-    }
-  };
-
   return (
     <>
-      <S.SingUpForm onSubmit={handleSubmit(onSubmit)}>
+      <S.SingUpForm onSubmit={handleSubmit(submitRegister)}>
         <img src={Logo} alt="" />
         <Link to="/">
-          <Button butttonType="medium">Sair</Button>
+          <ButtonStyle tag="button" butttonType="medium">
+            Sair
+          </ButtonStyle>
         </Link>
         <StyledTitle tag="h3" titleType="title3">
           Crie sua conta
@@ -82,64 +47,64 @@ const SingUp = () => {
             placeholder="Digite aqui seu email"
             {...register("name")}
           />
-          <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+          <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
             {errors.name?.message}
-          </StyledTitle>
+          </ErrorMessage>
         </label>
         <label>
-          Email:
+          Email
           <Input
             type="email"
-            placeholder="Digite aqui seu nome"
+            placeholder="Digite aqui seu email"
             {...register("email")}
           />
-          <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+          <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
             {errors.email?.message}
-          </StyledTitle>
+          </ErrorMessage>
         </label>
         <label>
           Senha:
           <Input
             type="password"
-            placeholder="Digite aqui seu nome"
+            placeholder="Digite aqui seu senha"
             {...register("password")}
           />
-          <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+          <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
             {errors.password?.message}
-          </StyledTitle>
+          </ErrorMessage>
         </label>
         <label>
           Confirmar Senha:
           <Input
             type="password"
-            placeholder="Digite aqui seu nome"
+            placeholder="Digite aqui seu senha"
             {...register("confirmPassword")}
           />
-          <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+          <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
             {errors.confirmPassword?.message}
-          </StyledTitle>
+          </ErrorMessage>
         </label>
         <label>
           Bio:
           <Input
             type="text"
-            placeholder="Digite aqui seu nome"
+            placeholder="Digite aqui sua bio"
             {...register("bio")}
           />
-          <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+          <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
             {errors.bio?.message}
-          </StyledTitle>
+          </ErrorMessage>
         </label>
         <label>
           Contato:
           <Input
             type="text"
-            placeholder="Digite aqui seu nome"
+            placeholder="Digite aqui seu numero"
             {...register("contact")}
           />
-          <StyledTitle tag="span" titleType="headline" color="#E83F5B">
+          <ErrorMessage tag="span" titleType="headline" color="#E83F5B">
             {errors.contact?.message}
-          </StyledTitle>
+          </ErrorMessage>
         </label>
         <label>
           Selecionar módulo:
@@ -152,9 +117,9 @@ const SingUp = () => {
             <option value="M3 React">M3 React</option>
           </Select>
         </label>
-        <Button butttonType="primary" type="submit">
+        <ButtonStyle tag="button" butttonType="primary" type="submit">
           Registrar
-        </Button>
+        </ButtonStyle>
       </S.SingUpForm>
     </>
   );
