@@ -11,6 +11,10 @@ export const GlobalStyles = createGlobalStyle`
     border: none;
     outline: none;
     font-family: 'Inter', sans-serif;
+    text-decoration: none;
+}
+button{
+  cursor: pointer;
 }
   &:root{
     --primal-color: #FF577F;
@@ -26,7 +30,6 @@ export const GlobalStyles = createGlobalStyle`
     --sucess: #3FE864;
 
   }
-
   body{
     background-color: #000000;
   }

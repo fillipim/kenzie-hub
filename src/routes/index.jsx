@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoutes from "../components/ProtectedRoutes";
 import SingIn from "../components/SinginForm";
 import SingUp from "../components/SingUpForm";
 import Dashboard from "../pages/Dashboard";
@@ -11,7 +12,9 @@ const MainRoutes = () => (
       <Route path="/singUp" element={<SingUp />} />
       <Route path="*" element={<SingIn/>}/>
     </Route>
-    <Route path="/dashboard/:id" element={<Dashboard />} />
+    <Route element={<ProtectedRoutes />}>
+    <Route path="/dashboard" element={<Dashboard />} />
+    </Route>
   </Routes>
 );
 

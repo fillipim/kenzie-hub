@@ -4,8 +4,7 @@ import {
 } from "../../constants/endpoints";
 
 const api = axios.create({
-    baseURL: baseUrl,
-    timeout: 3000,
+    baseURL: baseUrl
 })
 
 export default api;
