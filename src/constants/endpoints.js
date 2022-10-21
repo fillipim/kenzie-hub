@@ -1,1 +1,0 @@
-export const baseUrl = "https://kenziehub.herokuapp.com"
