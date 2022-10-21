@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const Header = styled.header`
+export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px ${({theme}) => theme.colors.grey.grey3};
+    border-bottom: 1px solid ${({theme}) => theme.colors.grey.grey1};
     padding: calc(1rem + 10px) 0;
     img{
       width: 101px;
@@ -16,11 +16,11 @@ const Header = styled.header`
     }
 `
 
-const Dashboard = styled.main`
+export const Dashboard = styled.main`
     padding: 0 calc(1rem - 3px);
 `
 
-const ProfileInfo = styled.section`
+export const ProfileInfo = styled.section`
   padding: 2rem 0;
   border-bottom: 1px solid ${({theme}) => theme.colors.grey.grey3};
   span{
@@ -34,12 +34,12 @@ const ProfileInfo = styled.section`
     }
 `
 
-const UserTechs = styled.div`
+export const UserTechs = styled.div`
   @media (min-width: 1024px) {
     padding: 0 334px;
   }
 `
-const TechsHeader = styled.div`
+export const TechsHeader = styled.div`
     padding:  calc(1rem - 3px) 0;
     display: flex;
     align-items: center;
@@ -55,11 +55,3 @@ const TechsHeader = styled.div`
       padding: 2rem 334px;
     }
 `
-
-export { 
-  Dashboard, 
-  ProfileInfo, 
-  Header,
-  UserTechs,
-  TechsHeader
-};

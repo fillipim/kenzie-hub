@@ -1,7 +1,7 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { iUser, useUserContext } from "../../contexts/AuthContext";
+import { useUserContext } from "../../contexts/AuthContext";
 
 import Loading from "../Loading";
 import { IoEyeSharp } from "react-icons/io5";
@@ -10,7 +10,7 @@ import { singInSchema } from "../../validations/singIn";
 
 import LogoPath from "../../assets/img/Logo.svg"
 
-import Input from "../Input/input.style";
+import {Input} from "../Input/input.style";
 import * as S from "./singIn.style";
 import { ButtonStyle } from "../Button/button.style";
 import { Text } from "../../styles/typography";

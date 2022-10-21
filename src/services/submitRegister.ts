@@ -1,3 +1,4 @@
+import { iUserRegister } from "../components/SingUpForm";
 import api from "./api";
 
 interface iUser {
@@ -5,8 +6,8 @@ interface iUser {
     name: string
 }
 
-export const register = async (body: object) => {
+export const singUp = async (body: iUserRegister) => {
     const {data} = await api.post<iUser>("/users", body);
 
     return data;
-}
+};

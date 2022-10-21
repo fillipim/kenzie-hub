@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTechContext } from "../../contexts/UserTechsContext";
 import { useUserContext } from "../../contexts/AuthContext";
@@ -36,10 +35,10 @@ const Dashboard = () => {
         </ButtonStyle>
       </S.Header>
       <S.ProfileInfo>
-        <Text level={3} fontWeight={700} color="grey0" size="size1">
+        <Text level={3} fontWeight={700} size="size1">
           Olá: {name}
         </Text>
-        <Text level={6}>{course_module}</Text>
+        <Text level={6} size="size3" fontWeight={400} color="grey1">{course_module}</Text>
       </S.ProfileInfo>
       <S.TechsHeader>
         <Text level={3}>Tecnologias</Text>

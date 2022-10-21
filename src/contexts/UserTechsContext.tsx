@@ -1,8 +1,11 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { toast } from "react-toastify";
-import { iTech } from "../components/EditTechModal";
 import api from "../services/api";
 import { useUserContext } from "./AuthContext";
+
+import { toast } from "react-toastify";
+import { iTech } from "../components/EditTechModal";
+import { addNewTech } from "../services/addNewTech";
+import { editExistingTech } from "../services/editExistingTech";
 
 interface iTechContextProp{
   children: ReactNode
@@ -27,8 +30,9 @@ const TechProvider = ({ children }: iTechContextProp) => {
 
   const addTech = async (data: iTech) => {
     setIsload(true);
+
     try {
-      await api.post("users/techs", data);
+      await addNewTech(data)
       toast.success("Tech adicionada!");
       searchUser();
       setShowModal(false);
@@ -43,7 +47,7 @@ const TechProvider = ({ children }: iTechContextProp) => {
     setIsload(true);
 
     try {
-      await api.put(`/users/techs/${id}`, data);
+      await editExistingTech(data, id)
       toast.success("Tech atualizada!");
       searchUser();
       setShowModal(false);

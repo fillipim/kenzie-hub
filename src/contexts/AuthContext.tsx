@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import { iTech } from "../components/EditTechModal";
 import { iUserRegister } from "../components/SingUpForm";
 import { iSingInUser } from "../components/SinginForm";
+import { singUp } from "../services/submitRegister";
+import { singIn } from "../services/submitLogin";
+import { loadUser } from "../services/loadUser";
 
 interface iUserContextProps{
   children: ReactNode
@@ -42,7 +45,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
     if (token) {
       try {
         api.defaults.headers = {Authorization: `Bearer ${token}`} as iRequestHeader;
-        const { data } = await api.get("/profile");
+        const data = await loadUser()
         setUser(data);
       } catch (error) {
         console.error(error);
@@ -54,7 +57,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
   const submitRegister = async (body: iUserRegister) => {
     setIsload(true);
     try {
-      await api.post("/users", body);
+      await singUp(body)
       toast.success("Cadastro concluído faça login para continuar!");
       navigate("/")
     } catch({response: {data: {message}}}) {
@@ -67,10 +70,10 @@ const UserProvider = ({ children }: iUserContextProps) => {
     }
   };
 
-  const submitLogin = async (body: object) => {
+  const submitLogin = async (body: iSingInUser) => {
     setIsload(true);
     try {
-      const { data } = await api.post("/sessions", body);
+      const data = await singIn(body)
       toast.success("Login concluìdo!");
       setUser(data);
       localStorage.setItem("@kenzie-hub: token", data.token);
