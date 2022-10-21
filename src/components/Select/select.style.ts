@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Select = styled.select`
+export const Select = styled.select`
     padding:  1rem;
     background-color: ${({theme}) => theme.colors.grey.grey2};
     border: 1.2px solid ${({theme}) => theme.colors.grey.grey2};
@@ -11,5 +11,3 @@ const Select = styled.select`
     border: 1.2px solid ${({theme}) => theme.colors.grey.grey0};
     }
 `
-
-export default Select;

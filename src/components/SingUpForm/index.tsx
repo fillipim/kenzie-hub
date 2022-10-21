@@ -5,11 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { singUpschema } from "../../validations/singUp";
 
-import Input from "../Input/input.style";
+import {Input} from "../Input/input.style";
 import { Text } from "../../styles/typography";
 import LogoPath from "../../assets/img/Logo.svg";
 import * as S from "./singUp.style";
-import Select from "../Select/select.style";
+import {Select} from "../Select/select.style";
 import { ButtonStyle } from "../Button/button.style";
 import { ErrorMessage } from "../ErrorMessage/errorMessage.style";
 

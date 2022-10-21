@@ -8,8 +8,8 @@ import { useUserContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { edittechSchema } from "../../validations/tech";
 
-import Input from "../Input/input.style";
-import Select from "../Select/select.style";
+import {Input} from "../Input/input.style";
+import {Select} from "../Select/select.style";
 import { ErrorMessage } from "../ErrorMessage/errorMessage.style";
 import * as S from "./editTech.style";
 import { Text } from "../../styles/typography";

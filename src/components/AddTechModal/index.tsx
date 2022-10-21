@@ -4,8 +4,8 @@ import { useTechContext } from "../../contexts/UserTechsContext";
 import { addTechSchema } from "../../validations/tech";
 
 import { ButtonStyle } from "../Button/button.style";
-import Input from "../Input/input.style";
-import Select from "../Select/select.style";
+import {Input} from "../Input/input.style";
+import {Select} from "../Select/select.style";
 import * as S from "./AddTechModal.style";
 import { ErrorMessage } from "../ErrorMessage/errorMessage.style";
 import { Text } from "../../styles/typography";
@@ -20,8 +20,6 @@ const AddTechModal = () => {
   } = useForm<iTech>({
     resolver: yupResolver(addTechSchema),
   });
-
-  const onError = (error: any) => console.log(error);
 
   return (
     <S.ModalContainer>
@@ -39,7 +37,7 @@ const AddTechModal = () => {
             X
           </S.CloseModalButton>
         </S.FormHeader>
-        <S.ModalForm onSubmit={handleSubmit(addTech, onError)}>
+        <S.ModalForm onSubmit={handleSubmit(addTech)}>
           <label>
             Nome:
             <Input

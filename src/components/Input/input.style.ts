@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Input = styled.input`
+export const Input = styled.input`
     padding:  1rem;
     background-color: ${({theme}) => theme.colors.grey.grey2};
     border: 1.2px solid ${({theme}) => theme.colors.grey.grey2};
@@ -12,5 +12,3 @@ const Input = styled.input`
         background-color: ${({theme}) => theme.colors.grey.grey2};
     }
 `
-
-export default Input;
