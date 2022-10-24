@@ -13,12 +13,12 @@ import { loadUser } from "../services/loadUser";
 
 interface iUserContextProps{
   children: ReactNode
-}
+};
 export interface iUser {
   name: string,
   course_module: string,
   techs: iTech[];
-}
+};
 
 interface iRequestHeader extends HeadersDefaults {Authorization: string}
 
@@ -75,7 +75,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
     try {
       const data = await singIn(body)
       toast.success("Login concluìdo!");
-      setUser(data);
+      setUser(data.user);
       localStorage.setItem("@kenzie-hub: token", data.token);
       api.defaults.headers = {Authorization: `Bearer ${data.token}`} as iRequestHeader;;
       navigate("/dashboard");
